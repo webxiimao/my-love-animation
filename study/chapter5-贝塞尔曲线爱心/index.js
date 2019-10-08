@@ -22,8 +22,9 @@ function BezierLine(){
   this.time = Config.time * 1000;
   this.size = Config.size
   this.start = [canvas.width / 2, canvas.height / 2]
-  this.cp = [200, 100]
-  this.end = [100, 200]
+  this.v1 = [76, -90]
+  this.v2 = [173, 98]
+  this.end = [canvas.width / 2, canvas.height / 2 + 162]
 }
 
 
@@ -31,17 +32,22 @@ function BezierLine(){
 BezierLine.prototype.draw = function(timestamp){
   
   if(timestamp >= this.time)return false
-  let current = timestamp / this.time;
-  let v1 = [this.cp[0] - this.start[0], this.cp[1] - this.start[1]]
-  let pv1 = [v1[0] * current, v1[1] * current];
-  let p1 = [pv1[0] + this.start[0], pv1[1] + this.start[1]]
   context.clearRect(0, 0, canvas.width, canvas.height);
+  let current = timestamp / this.time;
   context.beginPath();
   context.moveTo(this.start[0], this.start[1]);
-  let p2x = Math.pow((1 - current), 2) * this.start[0] + 2 * current * (1-current) * this.cp[0] + Math.pow(current, 2) * this.end[0]
-  let p2y = Math.pow((1 - current), 2) * this.start[1] + 2 * current * (1-current) * this.cp[1] + Math.pow(current, 2) * this.end[1]
-  let p2 = [p2x, p2y]
-  context.quadraticCurveTo(p1[0], p1[1], p2[0], p2[1]);
+  let p1 = [this.start[0] + this.v1[0] * current, this.start[1] + this.v1[1] * current]
+  let p2 = [this.start[0] + this.v1[0] + this.v2[0] * current, this.start[1] + this.v1[1] + this.v2[1] * current]
+  let p3x = Math.pow((1 - current), 3) * this.start[0] 
+      + 3 * Math.pow((1-current), 2) * current * (this.start[0] + this.v1[0]) 
+      + 3 * Math.pow(current, 2) * (1-current) * (this.start[0] + this.v1[0] + this.v2[0]) 
+      + this.end[0] * Math.pow(current, 3)
+  let p3y = Math.pow((1 - current), 3) * this.start[1] 
+      + 3 * Math.pow((1-current), 2) * current * (this.start[1] + this.v1[1]) 
+      + 3 * Math.pow(current, 2) * (1-current) * (this.start[1] + this.v1[1] + this.v2[1]) 
+      + this.end[1] * Math.pow(current, 3)
+  context.bezierCurveTo(p1[0], p1[1], p2[0], p2[1], p3x, p3y);
+  
   context.stroke();
   
   return true
