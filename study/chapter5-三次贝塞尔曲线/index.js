@@ -31,7 +31,12 @@ function BezierLine(){
 
 BezierLine.prototype.draw = function(timestamp){
   
-  if(timestamp >= this.time)return false
+  if(timestamp >= this.time){
+    context.closePath();
+    context.fill();
+    
+    return false
+  }
   context.clearRect(0, 0, canvas.width, canvas.height);
   let current = timestamp / this.time;
   context.beginPath();
