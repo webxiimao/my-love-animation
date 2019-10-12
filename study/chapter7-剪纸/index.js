@@ -37,23 +37,31 @@ function addCirclePath(){
 
 //矩形
 function addRectanglePath(){
+  // context.beginPath();
   rect(110, 110, 100, 50, false)
 }
 //三角形
 function addTrianglePath(){
-
+  // context.beginPath();
+  context.moveTo(300, 400);
+  context.lineTo(400, 500);
+  context.lineTo(300, 500);
+  context.closePath();
 }
 
 function main(){
   context.beginPath();
   context.fillStyle='green';
   
+  context.save();
   addOuterRectanglePath()
-
+  
   addCirclePath()
   addRectanglePath()
   addTrianglePath()
+  // context.stroke();
   context.fill();
+  context.restore();
   
 }
 
