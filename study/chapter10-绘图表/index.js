@@ -105,7 +105,7 @@ function canvasMounseMove(loc){
    const startPos = getStartLoc()
    restoreCanvasData()
    drawLine(startPos, currentPos)
-   if(isGuideWireChecked){
+   if(isGuideWireChecked()){
       drawAnnotation(currentPos)
    }
 }
