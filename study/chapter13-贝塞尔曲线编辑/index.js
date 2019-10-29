@@ -129,7 +129,6 @@ function canvasMouseDown(loc){
     let flag = currentBezier.getMarks().some((markPos, index) => {
       currentBezier.createMark(markPos)
       if(context.isPointInPath(x, y)){
-        
         currentMark = index
         canvas.onmousemove = canvasMarkMouseMove
         canvas.onmouseup = canvasMarkMouseUp
