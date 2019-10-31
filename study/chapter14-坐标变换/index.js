@@ -30,7 +30,7 @@ function resetCanvas(){
 //多边形
 class RubberbandShape{
   constructor(originPos){
-    this.sides = 5//边长
+    this.sides = 6//边长
     this.originPos = canvasPos(originPos.x, originPos.y)
     this.size = 0//长度
     this.angle = 0
